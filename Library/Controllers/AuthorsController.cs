@@ -7,33 +7,33 @@ using System.Linq;
 
 namespace Library.Controllers
 {
-  public class PatientsController : Controller
+  public class AuthorsController : Controller
   {
     private readonly LibraryContext _db;
 
-    public PatientsController(LibraryContext db)
+    public AuthorsController(LibraryContext db)
     {
       _db = db;
     }
 
     public ActionResult Index()
     {
-      return View(_db.Patients.ToList());
+      return View(_db.Authors.ToList());
     }
 
     public ActionResult Create()
     {
-      ViewBag.DoctorId = new SelectList(_db.Doctors, "DoctorId", "Name");
+      ViewBag.BookId = new SelectList(_db.Books, "BookId", "Name");
       return View();
     }
 
     [HttpPost]
-    public ActionResult Create(Patient patient, int DoctorId)
+    public ActionResult Create(Author author, int BookId)
     {
-      _db.Patients.Add(patient);
-      if (DoctorId != 0)
+      _db.Authors.Add(author);
+      if (BookId != 0)
       {
-        _db.DoctorPatient.Add(new DoctorPatient() { DoctorId = DoctorId, PatientId = patient.PatientId } );
+        _db.BookAuthor.Add(new BookAuthor() { BookId = BookId, AuthorId = author.AuthorId } );
       }
       _db.SaveChanges();
       return RedirectToAction("Index");
@@ -41,45 +41,45 @@ namespace Library.Controllers
 
     public ActionResult Details(int id)
     {
-      Patient thisPatient = _db.Patients
-        .Include(patient => patient.Doctors)
-        .ThenInclude(join => join.Doctor)
-        .FirstOrDefault(patient => patient.PatientId == id);
-      return View(thisPatient);
+      Author thisAuthor = _db.Authors
+        .Include(author => author.Books)
+        .ThenInclude(join => join.Book)
+        .FirstOrDefault(author => author.AuthorId == id);
+      return View(thisAuthor);
     }
 
     public ActionResult Edit(int id)
     {
-      Patient thisPatient = _db.Patients.FirstOrDefault(patients => patients.PatientId == id);
-      ViewBag.DoctorId = new SelectList(_db.Doctors, "DoctorId", "Name");
-      return View(thisPatient);
+      Author thisAuthor = _db.Authors.FirstOrDefault(authors => authors.AuthorId == id);
+      ViewBag.BookId = new SelectList(_db.Books, "BookId", "Title");
+      return View(thisAuthor);
     }
 
     [HttpPost]
-    public ActionResult Edit(Patient patient, int DoctorId)
+    public ActionResult Edit(Author author, int BookId)
     {
-      if (DoctorId != 0)
+      if (BookId != 0)
       {
-        _db.DoctorPatient.Add(new DoctorPatient() { DoctorId = DoctorId, PatientId = patient.PatientId });
+        _db.BookAuthor.Add(new BookAuthor() { BookId = BookId, AuthorId = author.AuthorId });
       }
-      _db.Entry(patient).State = EntityState.Modified;
+      _db.Entry(author).State = EntityState.Modified;
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
 
-    public ActionResult AddDoctor(int id)
+    public ActionResult AddBook(int id)
     {
-      Patient thisPatient = _db.Patients.FirstOrDefault(patients => patients.PatientId == id);
-      ViewBag.DoctorId = new SelectList(_db.Doctors, "DoctorId", "Name");
-      return View(thisPatient);
+      Author thisAuthor = _db.Authors.FirstOrDefault(authors => authors.AuthorId == id);
+      ViewBag.BookId = new SelectList(_db.Books, "BookId", "Name");
+      return View(thisAuthor);
     }
     
     [HttpPost]
-    public ActionResult AddDoctor(Patient patient, int DoctorId)
+    public ActionResult AddBook(Author author, int BookId)
     {
-      if (DoctorId !=0)
+      if (BookId !=0)
       {
-        _db.DoctorPatient.Add(new DoctorPatient() { DoctorId = DoctorId, PatientId = patient.PatientId });  
+        _db.BookAuthor.Add(new BookAuthor() { BookId = BookId, AuthorId = author.AuthorId });  
       }
       _db.SaveChanges();
       return RedirectToAction("Index");
@@ -95,10 +95,10 @@ namespace Library.Controllers
     public ActionResult DeleteConfirmed(int id)
     {
       Patient thisPatient = _db.Patients.FirstOrDefault(patients => patients.PatientId == id);
-      List<DoctorPatient> theseDoctorPatients = _db.DoctorPatient.Where(doctorPatient => doctorPatient.PatientId == id).ToList();
-      foreach(DoctorPatient dp in theseDoctorPatients)
+      List<BookPatient> theseBookPatients = _db.BookPatient.Where(bookPatient => doctorPatient.PatientId == id).ToList();
+      foreach(BookPatient dp in theseBookPatients)
       {
-        _db.DoctorPatient.Remove(dp);
+        _db.BookPatient.Remove(dp);
       }
       _db.Patients.Remove(thisPatient);
       _db.SaveChanges();
@@ -106,10 +106,10 @@ namespace Library.Controllers
     }
 
     [HttpPost]
-    public ActionResult DeleteDoctor(int joinId)
+    public ActionResult DeleteBook(int joinId)
     {
-      var joinEntry = _db.DoctorPatient.FirstOrDefault(entry => entry.DoctorPatientId == joinId);
-      _db.DoctorPatient.Remove(joinEntry);
+      var joinEntry = _db.BookPatient.FirstOrDefault(entry => entry.BookPatientId == joinId);
+      _db.BookPatient.Remove(joinEntry);
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
