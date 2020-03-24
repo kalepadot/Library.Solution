@@ -3,6 +3,7 @@ using Library.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Library.Controllers
 {
@@ -72,7 +73,7 @@ namespace Library.Controllers
 
     public ActionResult Search(string search)
     {
-      List<Book> model = _db.Books.Where(book => EF.Functions.Like(book.Title, "search%")).ToList();
+      List<Book> model = _db.Books.Where(book => book.Title.Contains(search)).ToList();
       return View(model);
     }
   }
