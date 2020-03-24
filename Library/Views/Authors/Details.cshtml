@@ -2,6 +2,7 @@
   Layout = "_Layout";
 }
 
+@using Library.Models;
 @model Library.Models.Author
 
 <h2>Author Details</h2>
@@ -14,28 +15,16 @@
 }
 else
 {
-  <h4>Books the author belongs to:</h4>
-  <ul>
+  <h4>Books theauthor belongs to:</h4>
   @foreach(var join in Model.Books)
   {
-    <li>@join.Books.Name</li>
-  }
-  </ul>
-}
-
-  <ul>
-  @foreach(var join in Model.Books)
-  {
-    <li>@join.Book.Name</li>
+    <li>@join.Book.Title</li>
     @using (Html.BeginForm("DeleteBook", "Authors"))
     {
-      @Html.Hidden("joinId", @join.AuthorBookId)
-      <input type="submit" value="Delete"/>
+      @Html.Hidden("joinId", @join.AuthorBookId) <input type="submit" value="Delete"/>
     }
   }
-  </ul>
-
-
+}
 
 <p>@Html.ActionLink("Back to list", "Index")</p>
 <p>@Html.ActionLink("Edit Author", "Edit", new { id = Model.AuthorId })</p>

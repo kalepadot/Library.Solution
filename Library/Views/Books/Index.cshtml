@@ -10,7 +10,7 @@
 
 @foreach (Book book in Model)
 {
-  <li>@Html.ActionLink($"{book.Name}", "Details", new { id = book.BookId })</li>
+  <li>@Html.ActionLink($"{book.Title}", "Details", new { id = book.BookId })</li>
 }
 
 <p>@Html.ActionLink("Add new book", "Create")</p>

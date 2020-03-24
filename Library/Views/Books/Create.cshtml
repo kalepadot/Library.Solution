@@ -4,12 +4,16 @@
 
 @model Library.Models.Book
 
+<br>
+<br>
 <h4>Add a new book</h4>
 @using (Html.BeginForm())
 {
-    @Html.LabelFor(model => model.Name)
-    @Html.TextBoxFor(model => model.Name)
+  <div class="mdl-textfield mdl-js-textfield">
+    @Html.LabelFor(model => model.Title, new { @class="mdl-textfield__label" })
+    @Html.TextBoxFor(model => model.Title, new { @class="mdl-textfield__input" })
+  </div>
 
-    <input type="submit" value="Add new category" />
+    <input type="submit" value="Add new book" />
 }
 <p>@Html.ActionLink("Show all books", "Index")</p> 

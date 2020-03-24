@@ -6,14 +6,14 @@
 
 <h2>Edit</h2>
 
-<h4>Edit this book: @Html.DisplayFor(model => model.Name)</h4>
+<h4>Edit this book: @Html.DisplayFor(model => model.Title)</h4>
 
 @using (Html.BeginForm())
 {
     @Html.HiddenFor(model => model.BookId)
 
-    @Html.LabelFor(model => model.Name)
-    @Html.EditorFor(model => model.Name)
+    @Html.LabelFor(model => model.Title)
+    @Html.EditorFor(model => model.Title)
 
     <input type="submit" value="Save" />
 }

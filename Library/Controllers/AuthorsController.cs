@@ -33,7 +33,7 @@ namespace Library.Controllers
       _db.Authors.Add(author);
       if (BookId != 0)
       {
-        _db.BookAuthor.Add(new BookAuthor() { BookId = BookId, AuthorId = author.AuthorId } );
+        _db.AuthorBook.Add(new AuthorBook() { BookId = BookId, AuthorId = author.AuthorId } );
       }
       _db.SaveChanges();
       return RedirectToAction("Index");
@@ -60,7 +60,7 @@ namespace Library.Controllers
     {
       if (BookId != 0)
       {
-        _db.BookAuthor.Add(new BookAuthor() { BookId = BookId, AuthorId = author.AuthorId });
+        _db.AuthorBook.Add(new AuthorBook() { BookId = BookId, AuthorId = author.AuthorId });
       }
       _db.Entry(author).State = EntityState.Modified;
       _db.SaveChanges();
@@ -79,7 +79,7 @@ namespace Library.Controllers
     {
       if (BookId !=0)
       {
-        _db.BookAuthor.Add(new BookAuthor() { BookId = BookId, AuthorId = author.AuthorId });  
+        _db.AuthorBook.Add(new AuthorBook() { BookId = BookId, AuthorId = author.AuthorId });  
       }
       _db.SaveChanges();
       return RedirectToAction("Index");
@@ -95,10 +95,10 @@ namespace Library.Controllers
     public ActionResult DeleteConfirmed(int id)
     {
       Author thisAuthor = _db.Authors.FirstOrDefault(authors => authors.AuthorId == id);
-      List<BookAuthor> theseBookAuthors = _db.BookAuthor.Where(bookAuthor => bookAuthor.AuthorId == id).ToList();
-      foreach(BookAuthor dp in theseBookAuthors)
+      List<AuthorBook> theseAuthorBooks = _db.AuthorBook.Where(authorBook => authorBook.AuthorId == id).ToList();
+      foreach(AuthorBook dp in theseAuthorBooks)
       {
-        _db.BookAuthor.Remove(dp);
+        _db.AuthorBook.Remove(dp);
       }
       _db.Authors.Remove(thisAuthor);
       _db.SaveChanges();
@@ -108,8 +108,8 @@ namespace Library.Controllers
     [HttpPost]
     public ActionResult DeleteBook(int joinId)
     {
-      var joinEntry = _db.BookAuthor.FirstOrDefault(entry => entry.BookAuthorId == joinId);
-      _db.BookAuthor.Remove(joinEntry);
+      var joinEntry = _db.AuthorBook.FirstOrDefault(entry => entry.AuthorBookId == joinId);
+      _db.AuthorBook.Remove(joinEntry);
       _db.SaveChanges();
       return RedirectToAction("Index");
     }

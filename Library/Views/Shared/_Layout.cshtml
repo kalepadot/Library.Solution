@@ -2,18 +2,18 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>To Do List</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title>Library</title>
+    @* <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script> *@
     <link rel="stylesheet" href="~/css/styles.css">
   </head>
   <body>
   <div class="demo-layout-transparent mdl-layout mdl-js-layout">
-    <header class="mdl-layout__header mdl-layout__header--transparent">
+    <header class="mdl-layout__header mdl-layout__header--colored">
       <div class="mdl-layout__header-row">
         <!-- Title -->
-        <span class="mdl-layout-title">Prufrock Prepatory Library</span>
+        <span class="mdl-layout-title">Haru Banana Library</span>
         <!-- Add spacer, to align navigation to the right -->
         <div class="mdl-layout-spacer"></div>
         <!-- Navigation -->
@@ -21,6 +21,7 @@
           <a class="mdl-navigation__link" href="/">Home</a>
           <a class="mdl-navigation__link" href="/Patrons">Patrons</a>
           <a class="mdl-navigation__link" href="/Books">Books</a>
+          <a class="mdl-navigation__link" href="/Authors">Authors</a>
           <a class="mdl-navigation__link" href="/Checkouts">Checkouts</a>
         </nav>
       </div>
@@ -37,7 +38,11 @@
     <main class="mdl-layout__content">
     </main>
   </div>
-    @RenderBody()
-    @Html.Partial("Footer")
+    <div class="mdl-grid">
+      <br>
+      <br>
+      @RenderBody()
+    </div>
+    @* @Html.Partial("Footer") *@
   </body>
 </html>
