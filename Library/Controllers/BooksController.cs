@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Library.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace Library.Controllers
 
     public ActionResult Create()
     {
+      ViewBag.AuthorId = new SelectList(_db.Authors, "AuthorId", "Name");
       return View();
     }
 

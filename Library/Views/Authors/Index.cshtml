@@ -17,6 +17,16 @@
   <li>@Html.ActionLink($"{author.Name}", "Details", new { id = author.AuthorId }) </li>
 }
 
+@using (Html.BeginForm("Search", "Authors"))
+{
+  <div class="mdl-textfield mdl-js-textfield">
+    <input type="text" name="search" id="author-search">
+    <label for="author-search">Search Authors By Name</label>
+  </div>
+
+  <input type="submit" value="Search for author" />
+}
+
 <p>@Html.ActionLink("Add new author", "Create")</p>
 
 <p>@Html.ActionLink("Home", "Index", "Home")</p>
