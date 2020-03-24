@@ -1,0 +1,18 @@
+@using Library.Models;
+@model List<Library.Models.Book>;
+
+<h1>Books</h1>
+
+@if (@Model.Count == 0)
+{
+  <h3>No books have been added yet!</h3>
+} 
+
+@foreach (Book book in Model)
+{
+  <li>@Html.ActionLink($"{book.Name}", "Details", new { id = book.BookId })</li>
+}
+
+<p>@Html.ActionLink("Add new book", "Create")</p>
+
+<p>@Html.ActionLink("Home", "Index", "Home")</p> 
