@@ -28,13 +28,21 @@ namespace Library.Controllers
     }
 
     [HttpPost]
-    public ActionResult Create(Book book, int AuthorId)
+    public ActionResult Create(Book book, int AuthorId, int Copies)
     {
       _db.Books.Add(book);
       if (AuthorId != 0)
       {
         _db.AuthorBook.Add(new AuthorBook() { AuthorId = AuthorId, BookId = book.BookId } );
       }
+      
+      
+      for (int i = 0; i < Copies; i++ )
+      {
+        Copy copy = new Copy(i, book.BookId);
+        _db.Copies.Add(copy);
+      }
+
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
