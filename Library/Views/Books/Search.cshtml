@@ -1,0 +1,23 @@
+ @{
+  Layout = "_Layout";
+}
+@using Library.Models;
+@using System.Collections.Generic;
+@model List<Library.Models.Book>;
+
+<h2>Search Results: <h2>
+
+@if (@Model.Count == 0)
+{
+  <p>There are no books with that title</p>
+}
+
+else
+{
+  @foreach (Book book in Model)
+  {
+    @Html.ActionLink( book.Title, "Details")
+  }
+}
+
+<p>@Html.ActionLink("Back to books", "Index")</p>

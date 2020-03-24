@@ -69,5 +69,11 @@ namespace Library.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
+
+    public ActionResult Search(string search)
+    {
+      List<Book> model = _db.Books.Where(book => EF.Functions.Like(book.Title, "search%")).ToList();
+      return View(model);
+    }
   }
 }
