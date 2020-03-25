@@ -1,4 +1,4 @@
- @{
+@{
   Layout = "_Layout";
 }
 
@@ -20,7 +20,7 @@ else
 @foreach (var join in Model.Authors)
 {
   <li>@join.Author.Name</li>
-  <li>Copies: @model.Copies.Count</li>
+  @* <li>Copies: @model.Copies.Count</li> *@
 }
 </ul>
 }

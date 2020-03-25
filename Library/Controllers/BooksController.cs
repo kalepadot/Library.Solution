@@ -28,7 +28,7 @@ namespace Library.Controllers
     }
 
     [HttpPost]
-    public ActionResult Create(Book book, int AuthorId, int Copies)
+    public ActionResult Create(Book book, int AuthorId, int copies)
     {
       _db.Books.Add(book);
       if (AuthorId != 0)
@@ -36,10 +36,8 @@ namespace Library.Controllers
         _db.AuthorBook.Add(new AuthorBook() { AuthorId = AuthorId, BookId = book.BookId } );
       }
       
-      
-      for (int i = 0; i < Copies; i++ )
+      foreach (var copy in copies)
       {
-        Copy copy = new Copy(i, book.BookId);
         _db.Copies.Add(copy);
       }
 
