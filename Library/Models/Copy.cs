@@ -4,7 +4,13 @@ namespace Library.Models
 {
 public class Copy
   {
+    public Copy()
+    {
+        this.Patrons = new HashSet<CopyPatron>();
+    }
     public int CopyId { get; set; }
     public int BookId { get; set; } 
+
+    public ICollection<CopyPatron> Patrons { get;}
   }
 }

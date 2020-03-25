@@ -1,17 +1,17 @@
-// using System.Collections.Generic;
+using System.Collections.Generic;
 
-// namespace Library.Models
-// {
-//     public class Patron
-//     {
-//         public Patron()
-//         {
-//             this.Checkouts = new HashSet<CheckoutPatron>();
-//         }
+namespace Library.Models
+{
+    public class Patron
+    {
+        public Patron()
+        {
+            this.Copies = new HashSet<CopyPatron>();
+        }
 
-//         public int PatronId { get; set; }
-//         public string Description { get; set; }
+        public int PatronId { get; set; }
+        public string Name { get; set; }
 
-//         public ICollection<CheckoutPatron> Checkouts { get;}
-//     }
-// }
+        public ICollection<CopyPatron> Copies { get;}
+    }
+}
