@@ -3,29 +3,29 @@
 }
 
 @using Library.Models;
-@model Library.Models.Author
+@model Library.Models.Patron
 
-<h2>Author Details</h2>
+<h2>Patron Details</h2>
 <hr />
 <h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
 
-@if(@Model.Books.Count == 0)
+@if(@Model.Copies.Count == 0)
 {
-  <p>This Author does not belong to any Books</p>
+  <p>This Patron has no Copies czeched out.</p>
 }
 else
 {
-  <h4>Books theauthor belongs to:</h4>
-  @foreach(var join in Model.Books)
+  <h4>Books the Patron has checked out:</h4>
+  @foreach(var join in Model.Copies)
   {
-    <li>@join.Book.Title</li>
-    @using (Html.BeginForm("DeleteBook", "Authors"))
+    @* <li>@join.Copy.Title</li> *@
+    @using (Html.BeginForm("DeleteCopy", "Patrons"))
     {
-      @Html.Hidden("joinId", @join.AuthorBookId) <input type="submit" value="Delete"/>
+      @Html.Hidden("joinId", @join.CopyPatronId) <input type="submit" value="Delete"/>
     }
   }
 }
 
 <p>@Html.ActionLink("Back to list", "Index")</p>
-<p>@Html.ActionLink("Edit Author", "Edit", new { id = Model.AuthorId })</p>
-<p>@Html.ActionLink("Delete Author", "Delete", new { id = Model.AuthorId })</p>
+<p>@Html.ActionLink("Edit Patron", "Edit", new { id = Model.PatronId })</p>
+<p>@Html.ActionLink("Delete Patron", "Delete", new { id = Model.PatronId })</p>

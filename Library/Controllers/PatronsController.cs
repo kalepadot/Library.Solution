@@ -33,14 +33,14 @@ namespace Library.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
-//     public ActionResult Details(int id)
-//     {
-//       Author thisAuthor = _db.Authors
-//         .Include(author => author.Books)
-//         .ThenInclude(join => join.Book)
-//         .FirstOrDefault(author => author.AuthorId == id);
-//       return View(thisAuthor);
-//     }
+    public ActionResult Details(int id)
+    {
+      Patron thisPatron = _db.Patrons
+        .Include(patron => patron.Copies)
+        .ThenInclude(join => join.Copy)
+        .FirstOrDefault(patron => patron.PatronId == id);
+      return View(thisPatron);
+    }
 
 //     public ActionResult Edit(int id)
 //     {
