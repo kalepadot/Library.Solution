@@ -31,7 +31,6 @@ namespace Library.Controllers
     public ActionResult Create(Book book, int AuthorId, int copies)
     {
       _db.Books.Add(book);
-      Console.WriteLine(book.BookId);
       if (AuthorId != 0)
       {
         _db.AuthorBook.Add(new AuthorBook() { AuthorId = AuthorId, BookId = book.BookId } );

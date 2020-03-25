@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using System.Security.Claims;
+using System;
 
 namespace Library.Controllers
 {
@@ -17,9 +18,9 @@ namespace Library.Controllers
     private readonly LibraryContext _db;
     private readonly UserManager<ApplicationUser> _userManager;
 
-    public PatronsController(LibraryContext db)
+    public PatronsController(UserManager<ApplicationUser> userManager, LibraryContext db)
     {
-      _userManager = _userManager;
+      _userManager = userManager;
       _db = db;
     }
 
