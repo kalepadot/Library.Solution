@@ -68,7 +68,8 @@ namespace Library.Controllers
     {
       await _signInManager.SignOutAsync();
       return RedirectToAction("Index");
-    }  
+    }
+  
   
   }
 }

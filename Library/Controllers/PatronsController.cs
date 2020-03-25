@@ -4,42 +4,61 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Library.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace Library.Controllers
 {
+  [Authorize]
   public class PatronsController : Controller
   {
     private readonly LibraryContext _db;
+    private readonly UserManager<ApplicationUser> _userManager;
 
     public PatronsController(LibraryContext db)
     {
+      _userManager = _userManager;
       _db = db;
     }
 
-    public ActionResult Index()
+    public async Task<ActionResult> Index()
     {
-      return View(_db.Patrons.ToList());
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      var userPatrons = _db.Patrons.Where(entry => entry.User.Id == currentUser.Id);
+      return View(userPatrons);
     }
 
     public ActionResult Create()
     {
+      ViewBag.CopyId = new SelectList(_db.Copies, "CopyId", "BookId");
       return View();
     }
 
     [HttpPost]
-    public ActionResult Create(Patron patron)
+    public async Task<ActionResult> Create(Patron patron, int CopyId)
     {
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      patron.User = currentUser;
       _db.Patrons.Add(patron);
+      if (CopyId != 0)
+      {
+        _db.CopyPatrons.Add(new CopyPatron() { CopyId = CopyId, PatronId = patron.PatronId });
+      }
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
+
     public ActionResult Details(int id)
     {
       Patron thisPatron = _db.Patrons
         // .Include(patron => patron.CopyPatrons)                                                                         
         // .ThenInclude(join => join.CopyPatron)
         .FirstOrDefault(patron => patron.PatronId == id);
-        // ViewBag.CopyId = new SelectList(_db.Copies, "CopyId", "BookId");
+
       return View(thisPatron);
     }
 
