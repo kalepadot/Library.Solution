@@ -3,9 +3,10 @@
 }
 
 @using Library.Models;
+@using System.Security.Claims             
 @model List<Library.Models.Patron>;
 
-<h1>Patrons</h1>
+<h1>Patron: @User.Identity.Name</h1>
 
 @if (@Model.Count == 0)
 {
