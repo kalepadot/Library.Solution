@@ -31,14 +31,15 @@ namespace Library.Controllers
     public ActionResult Create(Book book, int AuthorId, int copies)
     {
       _db.Books.Add(book);
+      Console.WriteLine(book.BookId);
       if (AuthorId != 0)
       {
         _db.AuthorBook.Add(new AuthorBook() { AuthorId = AuthorId, BookId = book.BookId } );
       }
-      
-      foreach (var copy in copies)
+
+      for (int i = 0; i < copies; i++ )
       {
-        _db.Copies.Add(copy);
+        _db.Copies.Add(new Copy() { BookId = book.BookId } );
       }
 
       _db.SaveChanges();

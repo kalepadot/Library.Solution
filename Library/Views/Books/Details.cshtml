@@ -23,6 +23,15 @@ else
   @* <li>Copies: @model.Copies.Count</li> *@
 }
 </ul>
+@if (@Model.Copies.Count == 0)
+{
+  <p>There are no copies of this book at the Library.</p>
+}
+else
+{
+  <p>There are 
+}
+
 }
 <p>@Html.ActionLink("Back to books", "Index")</p>
 <p>@Html.ActionLink("Edit Book", "Edit", new { id = Model.BookId })</p>
