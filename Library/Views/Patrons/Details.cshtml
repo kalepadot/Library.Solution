@@ -9,14 +9,14 @@
 <hr />
 <h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)</h3>
 
-@if(@Model.Copies.Count == 0)
+@if(@Model.CopyPatrons.Count == 0)
 {
   <p>This Patron has no Copies czeched out.</p>
 }
 else
 {
   <h4>Books the Patron has checked out:</h4>
-  @foreach(var join in Model.Copies)
+  @foreach(var join in Model.CopyPatrons)
   {
     @* <li>@join.Copy.Title</li> *@
     @using (Html.BeginForm("DeleteCopy", "Patrons"))

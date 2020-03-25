@@ -36,9 +36,10 @@ namespace Library.Controllers
     public ActionResult Details(int id)
     {
       Patron thisPatron = _db.Patrons
-        .Include(patron => patron.Copies)
-        .ThenInclude(join => join.Copy)
+        // .Include(patron => patron.CopyPatrons)                                                                         
+        // .ThenInclude(join => join.CopyPatron)
         .FirstOrDefault(patron => patron.PatronId == id);
+        // ViewBag.CopyId = new SelectList(_db.Copies, "CopyId", "BookId");
       return View(thisPatron);
     }
 
@@ -61,23 +62,23 @@ namespace Library.Controllers
 //       return RedirectToAction("Index");
 //     }
 
-//     public ActionResult AddBook(int id)
-//     {
-//       Author thisAuthor = _db.Authors.FirstOrDefault(authors => authors.AuthorId == id);
-//       ViewBag.BookId = new SelectList(_db.Books, "BookId", "Title");
-//       return View(thisAuthor);
-//     }
+    // public ActionResult AddCopy(int id)
+    // {
+    //   Patron thisPatron = _db.Patrons.FirstOrDefault(patrons => patrons.PatronId == id);
+    //   ViewBag.BookId = new SelectList(_db.Books, "CopyId", "Title");
+    //   return View(thisPatron);
+    // }
     
-//     [HttpPost]
-//     public ActionResult AddBook(Author author, int BookId)
-//     {
-//       if (BookId !=0)
-//       {
-//         _db.AuthorBook.Add(new AuthorBook() { BookId = BookId, AuthorId = author.AuthorId });  
-//       }
-//       _db.SaveChanges();
-//       return RedirectToAction("Index");
-//     }
+    // [HttpPost]
+    // public ActionResult AddBook(Patron patron, int BookId)
+    // {
+    //   if (BookId !=0)
+    //   {
+    //     _db.PatronBook.Add(new AuthorBook() { BookId = BookId, AuthorId = author.AuthorId });  
+    //   }
+    //   _db.SaveChanges();
+    //   return RedirectToAction("Index");
+    // }
 
 //     public ActionResult Delete(int id)
 //     {

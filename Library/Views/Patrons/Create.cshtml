@@ -13,6 +13,8 @@
   <div class="mdl-textfield mdl-js-textfield">
     @Html.LabelFor(model => model.Name, new { @class="mdl-textfield__label" })
     @Html.TextBoxFor(model => model.Name, new { @class="mdl-textfield__input" })
+    @Html.Label("Select Copy")
+    @Html.DropDownList("CopyId")
   </div>
 
     <input type="submit" value="Add new patron" class="btn btn-default" />

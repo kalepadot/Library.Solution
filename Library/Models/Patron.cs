@@ -6,12 +6,12 @@ namespace Library.Models
     {
         public Patron()
         {
-            this.Copies = new HashSet<CopyPatron>();
+            this.CopyPatrons = new HashSet<CopyPatron>();
         }
 
         public int PatronId { get; set; }
         public string Name { get; set; }
 
-        public ICollection<CopyPatron> Copies { get;}
+        public virtual ICollection<CopyPatron> CopyPatrons { get;}
     }
 }

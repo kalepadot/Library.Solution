@@ -11,6 +11,7 @@ public class Copy
     public int CopyId { get; set; }
     public int BookId { get; set; } 
 
+    public int PatronId { get; set;}
     public ICollection<CopyPatron> Patrons { get;}
   }
 }
