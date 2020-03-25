@@ -2,6 +2,23 @@
   Layout = "_Layout";
 }
 
+@using System.Security.Claims
 <h2>Authentication with Identity</h2>
 <hr />
-<p>@Html.ActionLink("Register", "Register")</p>
+@if (User.Identity.IsAuthenticated)
+{
+  <p>Hello @User.Identity.Name!</p>
+}
+else
+{
+  <p>@Html.ActionLink("Register", "Register")</p>
+  <p>@Html.ActionLink("Log in", "Login")</p>
+}
+@if (User.Identity.IsAuthenticated)
+{
+    <p>Hello @User.Identity.Name!</p>
+    @using (Html.BeginForm("LogOff", "Account"))
+    {
+        <input type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="Log out" />
+    }
+}
