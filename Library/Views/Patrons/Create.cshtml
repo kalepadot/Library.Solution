@@ -1,0 +1,20 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Library.Models.Patron
+
+<br>
+<br>
+<h4>Add a new patron</h4>
+
+@using (Html.BeginForm())
+{
+  <div class="mdl-textfield mdl-js-textfield">
+    @Html.LabelFor(model => model.Name, new { @class="mdl-textfield__label" })
+    @Html.TextBoxFor(model => model.Name, new { @class="mdl-textfield__input" })
+  </div>
+
+    <input type="submit" value="Add new patron" class="btn btn-default" />
+}
+<p>@Html.ActionLink("Show all patrons", "Index")</p>

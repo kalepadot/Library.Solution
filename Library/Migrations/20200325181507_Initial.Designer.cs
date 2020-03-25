@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20200324181652_Initial")]
+    [Migration("20200325181507_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,6 +60,44 @@ namespace Library.Migrations
                     b.ToTable("Books");
                 });
 
+            modelBuilder.Entity("Library.Models.Copy", b =>
+                {
+                    b.Property<int>("CopyId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("BookId");
+
+                    b.HasKey("CopyId");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("Copies");
+                });
+
+            modelBuilder.Entity("Library.Models.CopyPatron", b =>
+                {
+                    b.Property<int>("CopyPatronId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CheckoutDate");
+
+                    b.Property<string>("Copy");
+
+                    b.Property<int>("CopyId");
+
+                    b.Property<string>("DueDate");
+
+                    b.Property<string>("Patron");
+
+                    b.Property<int>("PatronId");
+
+                    b.HasKey("CopyPatronId");
+
+                    b.HasIndex("CopyId");
+
+                    b.ToTable("CopyPatron");
+                });
+
             modelBuilder.Entity("Library.Models.AuthorBook", b =>
                 {
                     b.HasOne("Library.Models.Author", "Author")
@@ -70,6 +108,22 @@ namespace Library.Migrations
                     b.HasOne("Library.Models.Book", "Book")
                         .WithMany("Authors")
                         .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Library.Models.Copy", b =>
+                {
+                    b.HasOne("Library.Models.Book")
+                        .WithMany("Copies")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Library.Models.CopyPatron", b =>
+                {
+                    b.HasOne("Library.Models.Copy")
+                        .WithMany("Patrons")
+                        .HasForeignKey("CopyId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

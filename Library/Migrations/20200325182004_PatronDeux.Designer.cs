@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20200324230424_Copy")]
-    partial class Copy
+    [Migration("20200325182004_PatronDeux")]
+    partial class PatronDeux
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -60,24 +60,6 @@ namespace Library.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("Library.Models.BookCopy", b =>
-                {
-                    b.Property<int>("BookCopyId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("BookId");
-
-                    b.Property<int>("CopyId");
-
-                    b.HasKey("BookCopyId");
-
-                    b.HasIndex("BookId");
-
-                    b.HasIndex("CopyId");
-
-                    b.ToTable("BookCopy");
-                });
-
             modelBuilder.Entity("Library.Models.Copy", b =>
                 {
                     b.Property<int>("CopyId")
@@ -87,7 +69,47 @@ namespace Library.Migrations
 
                     b.HasKey("CopyId");
 
+                    b.HasIndex("BookId");
+
                     b.ToTable("Copies");
+                });
+
+            modelBuilder.Entity("Library.Models.CopyPatron", b =>
+                {
+                    b.Property<int>("CopyPatronId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CheckoutDate");
+
+                    b.Property<string>("Copy");
+
+                    b.Property<int>("CopyId");
+
+                    b.Property<string>("DueDate");
+
+                    b.Property<string>("Patron");
+
+                    b.Property<int>("PatronId");
+
+                    b.HasKey("CopyPatronId");
+
+                    b.HasIndex("CopyId");
+
+                    b.HasIndex("PatronId");
+
+                    b.ToTable("CopyPatron");
+                });
+
+            modelBuilder.Entity("Library.Models.Patron", b =>
+                {
+                    b.Property<int>("PatronId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("PatronId");
+
+                    b.ToTable("Patrons");
                 });
 
             modelBuilder.Entity("Library.Models.AuthorBook", b =>
@@ -103,16 +125,24 @@ namespace Library.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Library.Models.BookCopy", b =>
+            modelBuilder.Entity("Library.Models.Copy", b =>
                 {
-                    b.HasOne("Library.Models.Book", "Book")
+                    b.HasOne("Library.Models.Book")
                         .WithMany("Copies")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
 
-                    b.HasOne("Library.Models.Copy", "Copy")
-                        .WithMany()
+            modelBuilder.Entity("Library.Models.CopyPatron", b =>
+                {
+                    b.HasOne("Library.Models.Copy")
+                        .WithMany("Patrons")
                         .HasForeignKey("CopyId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Library.Models.Patron")
+                        .WithMany("Copies")
+                        .HasForeignKey("PatronId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
