@@ -52,6 +52,8 @@ namespace Library.Controllers
         .Include(book => book.Authors)
         .ThenInclude(join => join.Author)
         .FirstOrDefault(book => book.BookId == id);
+      List<Copy> copyList = _db.Copies.Where(book => book.BookId == id).ToList();
+      thisBook.Copies = copyList;
       return View(thisBook);
     }
 
